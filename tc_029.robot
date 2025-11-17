@@ -63,9 +63,7 @@ Login And Edit Profile Robust
     Click Element                    ${PROFILE_BTN}
     Sleep                            1s
 
-    # ======================================================
     # --- EDIT NAME ---
-    # ======================================================
     Wait Until Element Is Visible    ${EDIT_NAME_BTN}    ${TIMEOUT}
     Click Element                    ${EDIT_NAME_BTN}
     Sleep                            0.5s
@@ -77,13 +75,11 @@ Login And Edit Profile Robust
     Input Text        ${name_field}     Sign Test
     Sleep             0.5s
 
-    # Save name
+    # --- Save name ---
     Click Element    accessibility_id=Save
     Sleep            1s
 
-    # ======================================================
     # --- EDIT AGE ---
-    # ======================================================
     Wait Until Element Is Visible    ${EDIT_AGE_BTN}    ${TIMEOUT}
     Click Element                    ${EDIT_AGE_BTN}
     Sleep                            1s
@@ -95,7 +91,7 @@ Login And Edit Profile Robust
     Input Text       ${age_field}      22
     Sleep            0.5s
 
-    # Save age
+    # --- Save age ---
     Click Element    accessibility_id=Save
     Sleep            1s
 

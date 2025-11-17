@@ -55,4 +55,5 @@ Login With Google Should Reach Home
     Wait Until Element Is Visible    accessibility_id=${HOME_USER_ACCESSIBILITY_ID}    25s
     Log                              Home screen is visible — test PASSED
 
+    # --- Close App ---
     Close Application

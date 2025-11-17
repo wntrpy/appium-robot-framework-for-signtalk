@@ -13,11 +13,11 @@ ${TIMEOUT}         30s
 ${LOGIN_GOOGLE_XPATH}            //android.widget.ImageView[@content-desc="Log in with Google"]
 ${GOOGLE_FIRST_ACCOUNT_XPATH}    (//android.widget.LinearLayout[@resource-id="com.google.android.gms:id/container"])[1]
 
-# Notification permission
+# --- Notification permission ---
 ${NOTIF_DIALOG_ID}          com.android.permissioncontroller:id/grant_dialog
 ${NOTIF_ALLOW_BUTTON_ID}    com.android.permissioncontroller:id/permission_allow_button
 
-# Home screen
+# --- Home screen ---
 ${HOME_USER_ACCESSIBILITY_ID}    moses\nHello 🙂👍 #sign\n2:31 AM
 
 # --- Search button on Home ---
@@ -40,7 +40,7 @@ ${SEARCH_BACK_BTN}    class=android.widget.Button
 # --- Home screen assertion after returning ---
 ${HOME_ASSERT}    xpath=//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.widget.ImageView[2]
 
-# Notification permission (ID based, same as your working tests)
+# --- Notification permission ---
 ${NOTIF_DIALOG_ID}          com.android.permissioncontroller:id/grant_dialog
 ${NOTIF_ALLOW_BUTTON_ID}    com.android.permissioncontroller:id/permission_allow_button
 

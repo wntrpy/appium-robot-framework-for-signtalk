@@ -60,4 +60,5 @@ Login With Correct Email Should Show Error
     Run Keyword If       ${error_present}                 Log                              Error message appeared — test PASSED
     Run Keyword If       not ${error_present}             Fail                             Error message did not appear — test FAILED
 
+    # --- Close App ---
     Close Application

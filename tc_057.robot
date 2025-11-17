@@ -11,22 +11,22 @@ ${APP_ACTIVITY}    .MainActivity
 ${LOGIN_GOOGLE_XPATH}            //android.widget.ImageView[@content-desc="Log in with Google"]
 ${GOOGLE_FIRST_ACCOUNT_XPATH}    (//android.widget.LinearLayout[@resource-id="com.google.android.gms:id/container"])[1]
 
-# Home screen user button
+# --- Home screen user button ---
 ${HOME_CHAT_USER_ID}    Saki\nHello\n2:29 AM
 
-# PFP button → receiver profile (SAFE & ROBUST)
+# --- PFP button → receiver profile ---
 ${CHAT_PFP_XPATH}    //android.view.View[contains(@content-desc,"Last seen")]
 
-# Change Nickname button
+# --- Change Nickname button ---
 ${CHANGE_NICKNAME_ID}    Change Nickname
 
-# EditText in alert dialog
+# ---EditText in alert dialog ---
 ${NICKNAME_EDITTEXT_CLASS}    android.widget.EditText
 
-# Save button
+# --- Save button ---
 ${SAVE_BUTTON_ID}    Save
 
-# Notification permission (ID based, same as your working tests)
+# --- Notification permission ---
 ${NOTIF_DIALOG_ID}          com.android.permissioncontroller:id/grant_dialog
 ${NOTIF_ALLOW_BUTTON_ID}    com.android.permissioncontroller:id/permission_allow_button
 
@@ -52,14 +52,12 @@ Change Nickname From Chat Screen
     Run Keyword If     ${modal_start}                   Click Element            id=${NOTIF_ALLOW_BUTTON_ID}
     Run Keyword If     ${modal_start}                   Log                      Permission allowed on app start
 
-
     # --- Login with Google ---
     Wait Until Element Is Visible    xpath=${LOGIN_GOOGLE_XPATH}    20s
     Click Element                    xpath=${LOGIN_GOOGLE_XPATH}
 
     Wait Until Element Is Visible    xpath=${GOOGLE_FIRST_ACCOUNT_XPATH}    20s
     Click Element                    xpath=${GOOGLE_FIRST_ACCOUNT_XPATH}
-
 
     # --- Wait for Home Screen user (Saki) ---
     Wait Until Element Is Visible    accessibility_id=${HOME_CHAT_USER_ID}    20s
@@ -84,4 +82,5 @@ Change Nickname From Chat Screen
 
     Log    Nickname saved successfully — test PASSED
 
+    # --- Close App ---
     Close Application

@@ -13,20 +13,20 @@ ${TIMEOUT}         30s
 ${LOGIN_GOOGLE_XPATH}            //android.widget.ImageView[@content-desc="Log in with Google"]
 ${GOOGLE_FIRST_ACCOUNT_XPATH}    (//android.widget.LinearLayout[@resource-id="com.google.android.gms:id/container"])[1]
 
-# Notification permission
+# --- Notification permission ---
 ${NOTIF_DIALOG_ID}          com.android.permissioncontroller:id/grant_dialog
 ${NOTIF_ALLOW_BUTTON_ID}    com.android.permissioncontroller:id/permission_allow_button
 
-# Home screen
+# --- Home screen ---
 ${HOME_USER_ACCESSIBILITY_ID}    moses\nHello 🙂👍 #sign\n2:31 AM
 
-# Search button on Home
+#--- Search button on Home ---
 ${SEARCH_BTN}    accessibility_id=Search contact...
 
-# Search bar
+# --- Search bar ---
 ${SEARCH_BAR}    class=android.widget.EditText
 
-# User card
+# --- User card ---
 ${USER_CARD}    accessibility_id=Moses Armildez\narmildezmoses11olpstem@gmail.com
 
 *** Test Cases ***
@@ -57,12 +57,6 @@ Search User And Verify
     Wait Until Element Is Visible    xpath=${GOOGLE_FIRST_ACCOUNT_XPATH}    ${TIMEOUT}
     Click Element                    xpath=${GOOGLE_FIRST_ACCOUNT_XPATH}
 
-    # --- Handle notification modal again (sometimes appears after Google login) ---
-    ${modal_after_login}=    Run Keyword And Return Status
-    ...                      Wait Until Element Is Visible    id=${NOTIF_DIALOG_ID}    8s
-    Run Keyword If           ${modal_after_login}             Click Element            id=${NOTIF_ALLOW_BUTTON_ID}
-    Run Keyword If           ${modal_after_login}             Log                      Permission allowed after Google login
-
     # --- Wait for Home screen ---
     Wait Until Element Is Visible    accessibility_id=${HOME_USER_ACCESSIBILITY_ID}    ${TIMEOUT}
 
@@ -83,4 +77,5 @@ Search User And Verify
     Run Keyword If    ${user_found}                    Log             User Moses Armildez found — PASS
     Run Keyword If    not ${user_found}                Fail            User Moses Armildez not found — FAIL
 
+    # --- Close App ---
     Close Application

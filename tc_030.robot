@@ -13,7 +13,7 @@ ${TIMEOUT}         30s
 ${LOGIN_GOOGLE_XPATH}            //android.widget.ImageView[@content-desc="Log in with Google"]
 ${GOOGLE_FIRST_ACCOUNT_XPATH}    (//android.widget.LinearLayout[@resource-id="com.google.android.gms:id/container"])[1]
 
-# --- Notification permission (use XPATHs like your other tests) ---
+# --- Notification permission ---
 ${NOTIF_DIALOG_XPATH}          //android.widget.LinearLayout[@resource-id="com.android.permissioncontroller:id/grant_dialog"]
 ${NOTIF_ALLOW_BUTTON_XPATH}    //android.widget.Button[@resource-id="com.android.permissioncontroller:id/permission_allow_button"]
 
@@ -47,7 +47,7 @@ Logout From Settings
 
     Set Appium Timeout    60s
 
-    # --- Handle notification modal immediately (may appear on app launch) ---
+    # --- Handle notification modal immediately ---
     ${dialog_present_start}=    Run Keyword And Return Status    Wait Until Element Is Visible    xpath=${NOTIF_DIALOG_XPATH}                       6s
     Run Keyword If              ${dialog_present_start}          Click Element                    xpath=${NOTIF_ALLOW_BUTTON_XPATH}
     Run Keyword If              ${dialog_present_start}          Log                              Notification permission allowed (on app start)
@@ -57,11 +57,6 @@ Logout From Settings
     Click Element                    xpath=${LOGIN_GOOGLE_XPATH}
     Wait Until Element Is Visible    xpath=${GOOGLE_FIRST_ACCOUNT_XPATH}    ${TIMEOUT}
     Click Element                    xpath=${GOOGLE_FIRST_ACCOUNT_XPATH}
-
-    # --- Handle notification modal again (sometimes appears after Google account selection) ---
-    ${dialog_present_after}=    Run Keyword And Return Status    Wait Until Element Is Visible    xpath=${NOTIF_DIALOG_XPATH}                             8s
-    Run Keyword If              ${dialog_present_after}          Click Element                    xpath=${NOTIF_ALLOW_BUTTON_XPATH}
-    Run Keyword If              ${dialog_present_after}          Log                              Notification permission allowed (after Google login)
 
     # --- Wait for Home screen ---
     Wait Until Element Is Visible    accessibility_id=${HOME_USER_ACCESSIBILITY_ID}    ${TIMEOUT}
