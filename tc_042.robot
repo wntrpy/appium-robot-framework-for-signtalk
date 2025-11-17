@@ -40,15 +40,9 @@ ${SEARCH_BACK_BTN}    class=android.widget.Button
 # --- Home screen assertion after returning ---
 ${HOME_ASSERT}    xpath=//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.widget.ImageView[2]
 
-# --- Permission Modal Locators ---
-${PERMISSION_DIALOG_XPATH}    //android.widget.LinearLayout[@resource-id="com.android.permissioncontroller:id/grant_dialog"]
-${PERMISSION_ALLOW_BUTTON}    //android.widget.Button[@resource-id="com.android.permissioncontroller:id/permission_allow_button"]
-
-
 # Notification permission (ID based, same as your working tests)
 ${NOTIF_DIALOG_ID}          com.android.permissioncontroller:id/grant_dialog
 ${NOTIF_ALLOW_BUTTON_ID}    com.android.permissioncontroller:id/permission_allow_button
-
 
 *** Test Cases ***
 Search User And Send Message
@@ -65,21 +59,17 @@ Search User And Send Message
 
     Set Appium Timeout    60s
 
-    # --- Handle notification modal immediately if it appears ---
+     # --- Handle notification modal immediately if it appears ---
     ${modal_start}=    Run Keyword And Return Status
     ...                Wait Until Element Is Visible    id=${NOTIF_DIALOG_ID}    5s
     Run Keyword If     ${modal_start}                   Click Element            id=${NOTIF_ALLOW_BUTTON_ID}
     Run Keyword If     ${modal_start}                   Log                      Permission allowed on app start
-
 
     # --- Login with Google ---
     Wait Until Element Is Visible    xpath=${LOGIN_GOOGLE_XPATH}            ${TIMEOUT}
     Click Element                    xpath=${LOGIN_GOOGLE_XPATH}
     Wait Until Element Is Visible    xpath=${GOOGLE_FIRST_ACCOUNT_XPATH}    ${TIMEOUT}
     Click Element                    xpath=${GOOGLE_FIRST_ACCOUNT_XPATH}
-
-    # --- Handle notification modal ---
-    Handle Notification Modal
 
     # --- Wait for Home screen ---
     Wait Until Element Is Visible    accessibility_id=${HOME_USER_ACCESSIBILITY_ID}    ${TIMEOUT}
@@ -110,23 +100,23 @@ Search User And Send Message
     Wait Until Element Is Visible    ${SEND_BTN}    ${TIMEOUT}
     Click Element                    ${SEND_BTN}
 
-    # --- Assertion: verify message sent ---
+    # --- Assertion: verify message sent (send button enabled again) ---
     ${send_enabled}=    Run Keyword And Return Status
     ...                 Element Should Be Enabled        ${SEND_BTN}
     Run Keyword If      ${send_enabled}                  Log            Message sent successfully — PASS
     ...                 ELSE                             Fail           Message not sent — FAIL
 
-    # --- Click Back button (chat) ---
+    # --- Click Back button from chat to return to Search screen ---
     Wait Until Element Is Visible    ${CHAT_BACK_BTN}    ${TIMEOUT}
     Click Element                    ${CHAT_BACK_BTN}
     Sleep                            1s
 
-    # --- Click Back button (search) ---
+    # --- Click Back button from Search screen to return to Home screen ---
     Wait Until Element Is Visible    ${SEARCH_BACK_BTN}    ${TIMEOUT}
     Click Element                    ${SEARCH_BACK_BTN}
     Sleep                            1s
 
-    # --- Assert Home screen ---
+    # --- Assert Home screen is visible ---
     ${home_visible}=    Run Keyword And Return Status
     ...                 Wait Until Element Is Visible    ${HOME_ASSERT}    ${TIMEOUT}
     Run Keyword If      ${home_visible}                  Log               Returned to Home screen — PASS
