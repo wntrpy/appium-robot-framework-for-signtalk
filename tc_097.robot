@@ -47,16 +47,17 @@ Open ASL Alphabet Chart From Settings
 
     Set Appium Timeout    60s
 
+    # --- Handle notification modal immediately if it appears ---
+    ${modal_start}=    Run Keyword And Return Status
+    ...                Wait Until Element Is Visible    id=${NOTIF_DIALOG_ID}    5s
+    Run Keyword If     ${modal_start}                   Click Element            id=${NOTIF_ALLOW_BUTTON_ID}
+    Run Keyword If     ${modal_start}                   Log                      Permission allowed on app start
+
     # --- Login with Google ---
     Wait Until Element Is Visible    xpath=${LOGIN_GOOGLE_XPATH}            ${TIMEOUT}
     Click Element                    xpath=${LOGIN_GOOGLE_XPATH}
     Wait Until Element Is Visible    xpath=${GOOGLE_FIRST_ACCOUNT_XPATH}    ${TIMEOUT}
     Click Element                    xpath=${GOOGLE_FIRST_ACCOUNT_XPATH}
-
-    # --- Handle notification modal ---
-    ${dialog_present}=    Run Keyword And Return Status
-    ...                   Wait Until Element Is Visible    id=${NOTIF_DIALOG_ID}    10s
-    Run Keyword If        ${dialog_present}                Click Element            id=${NOTIF_ALLOW_BUTTON_ID}
 
     # --- Wait for Home screen ---
     Wait Until Element Is Visible    accessibility_id=${HOME_USER_ACCESSIBILITY_ID}    ${TIMEOUT}
