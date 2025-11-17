@@ -12,7 +12,7 @@ ${LOGIN_GOOGLE_XPATH}            //android.widget.ImageView[@content-desc="Log i
 ${GOOGLE_FIRST_ACCOUNT_XPATH}    (//android.widget.LinearLayout[@resource-id="com.google.android.gms:id/container"])[1]
 
 # Home screen user button
-${HOME_CHAT_USER_ID}    Saki\nHello\n6:58 PM
+${HOME_CHAT_USER_ID}    Saki\nHello\n2:29 AM
 
 # PFP button → receiver profile (SAFE & ROBUST)
 ${CHAT_PFP_XPATH}    //android.view.View[contains(@content-desc,"Last seen")]
@@ -26,7 +26,7 @@ ${NICKNAME_EDITTEXT_CLASS}    android.widget.EditText
 # Save button
 ${SAVE_BUTTON_ID}    Save
 
-# Notification popup locators
+# Notification permission (ID based, same as your working tests)
 ${NOTIF_DIALOG_ID}          com.android.permissioncontroller:id/grant_dialog
 ${NOTIF_ALLOW_BUTTON_ID}    com.android.permissioncontroller:id/permission_allow_button
 
@@ -44,6 +44,15 @@ Change Nickname From Chat Screen
     ...                 appActivity=${APP_ACTIVITY}
     ...                 newCommandTimeout=300
 
+    Set Appium Timeout    60s
+
+    # --- Handle notification modal immediately if it appears ---
+    ${modal_start}=    Run Keyword And Return Status
+    ...                Wait Until Element Is Visible    id=${NOTIF_DIALOG_ID}    5s
+    Run Keyword If     ${modal_start}                   Click Element            id=${NOTIF_ALLOW_BUTTON_ID}
+    Run Keyword If     ${modal_start}                   Log                      Permission allowed on app start
+
+
     # --- Login with Google ---
     Wait Until Element Is Visible    xpath=${LOGIN_GOOGLE_XPATH}    20s
     Click Element                    xpath=${LOGIN_GOOGLE_XPATH}
@@ -51,9 +60,6 @@ Change Nickname From Chat Screen
     Wait Until Element Is Visible    xpath=${GOOGLE_FIRST_ACCOUNT_XPATH}    20s
     Click Element                    xpath=${GOOGLE_FIRST_ACCOUNT_XPATH}
 
-    # --- Handle notification permission modal if shown ---
-    ${dialog_present}=    Run Keyword And Return Status    Wait Until Element Is Visible    id=${NOTIF_DIALOG_ID}          6s
-    Run Keyword If        ${dialog_present}                Click Element                    id=${NOTIF_ALLOW_BUTTON_ID}
 
     # --- Wait for Home Screen user (Saki) ---
     Wait Until Element Is Visible    accessibility_id=${HOME_CHAT_USER_ID}    20s
